@@ -1,0 +1,18 @@
+[
+  	{
+			"value": "mobile",
+      	"name": "Mobile"
+    },
+    {
+    		"value": "sales",
+      	"name": "Sales"
+    },
+    {
+    		"value": "web",
+      	"name": "Web"
+    },
+    {
+    		"value": "testing",
+      	"name": "Testing"
+    }
+]

@@ -1,0 +1,20 @@
+.block-employees_block-employee.ng-enter, .block-content.ng-enter, .employee-details.ng-enter { 
+    -webkit-transition: .3s cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: .3s cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: .3s cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: .3s cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: .3s cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    display: block;
+} 
+ 
+.block-employees_block-employee.ng-enter, .block-content.ng-enter, .employee-details.ng-enter {
+  opacity: 0;
+}
+ 
+.block-employees_block-employee.ng-enter.ng-enter-active, .block-content.ng-enter.ng-enter-active, .employee-details.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+.block-employees_block-employee.ng-leave, .block-content.ng-leave, .employee-details.ng-leave {
+  display: none;
+}

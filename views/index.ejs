@@ -1,0 +1,52 @@
+<html lang="en" data-ng-app="crewApp">
+<head>
+  <meta charset="utf-8">
+  <title>Crew</title>
+  <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css">
+  <script src="/bower_components/angular/angular.js"></script>
+  <script src="/bower_components/angular-resource/angular-resource.js"></script>
+  <script src="/bower_components/angular-route-segment/build/angular-route-segment.js"></script>
+  <script src="/bower_components/angular-route/angular-route.js"></script>
+  <script src="/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="/js/services.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/controllers.js"></script>
+  <script src="/js/directives.js"></script>
+</head>
+<body>
+<div class="footer-wrapper">
+    
+<!--Header begins-->
+    <header class="block-header">
+      <div class="block-header_block-content">
+        <div class="block-header_logo"></div>
+        <nav class="block-header_list-links">
+          <input class="menu-checkbox" type="checkbox" id="button">
+          <label for="button" class="label-menu" onclick></label>
+          <ul class="block-header_list-links-ul">
+          <li class="block-header_list-links_link"><a data-ng-class="{active: ('contact' | routeSegmentStartsWith)}" href="#/contact">Contact us</a></li>
+          <li class="block-header_list-links_link"><a href="#/faq" data-ng-class="{active: ('faq' | routeSegmentStartsWith)}">FAQ</a></li>
+          <li class="block-header_list-links_link"><a href="#/about" data-ng-class="{active: ('about' | routeSegmentStartsWith)}">About</a></li>
+          <li class="block-header_list-links_link"><a href="#/employees" data-ng-class="{active: ('employees' | routeSegmentStartsWith)}">Home</a></li>
+        </ul>
+        </nav>
+      </div>
+      <div class="wrapper"></div>
+    </header>
+<!--Header ends-->
+
+<!--Block employee description begins-->
+    <div class="description-overlay"></div>
+    <div class="block-content" data-app-view-segment="0"></div>
+  </div> 
+  
+<!--Footer begins-->
+  <div  class="block-footer">
+    <p class="block-footer_text">Developed by Shkodochka.<br>
+  Designed by Egor Sokhan.</p> 
+  </div>
+<!--Footer ends-->
+</body>
+</html>

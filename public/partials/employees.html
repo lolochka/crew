@@ -1,0 +1,106 @@
+<div class="right-wrap"  data-app-view-segment="1">
+</div>
+<!--Block employee description ends-->
+
+<!--Block employees list begins-->
+<section class="block-employees">
+
+<!--FORM BEGINS-->
+<div class="overlay" data-ng-show="showme" data-ng-click="showme=false"></div>
+<section class="block-create-employee" data-ng-show="showme">
+  <div class="heading-create-employee_close" data-ng-click="showme=false"></div>
+  <h2 class="heading-create-employee">Employee</h2>
+        
+  <form id="create-emloyee-form" name="create-employee" class="create-emloyee-form" data-ng-submit="addEmployee()">
+    <ul class="create-emloyee-form_list">
+                
+      <li class="create-emloyee-form_list-field">
+        <input type="text" name='empl-name' data-ng-model="newEmployee.name" placeholder="Name*" required pattern="^[A-Za-z]{2,}">
+        <input type="text" name='empl-surname' data-ng-model="newEmployee.surname" placeholder="Surname*" pattern="^[A-Za-z]{2,}" required>
+      </li>
+                
+      <li class="create-emloyee-form_list-field">
+        <input type="text" name='empl-title' placeholder="Job position*" required data-ng-model="newEmployee.title">
+        <select name='empl-level' id="level" data-ng-model="newEmployee.level" data-ng-options="level.value as level.name for level in levels" data-default-option="Choose level"></select>
+      </li>
+      <li class="create-emloyee-form_list-field">
+        <select name="empl-department" id="department" data-ng-model="newEmployee.department" required data-ng-options="department.value as department.name for department in departments" data-default-option="Choose department*"></select>
+        <input type="text" name="empl-manager" placeholder="Responsible manager" data-ng-model="newEmployee.manager">
+      </li>
+      <li class="create-emloyee-form_list-field">
+        <span class="input-label">Career start</span> 
+        <select name="empl-month-career-start" data-ng-model="newEmployee.month" data-ng-options="month.value as month.name for month in months" data-default-option="Choose month"></select>
+        <input type="text"  name="empl-year-career-start" placeholder="year" pattern="^(19|20)\d\d" data-ng-model="newEmployee.year">
+      </li>
+                
+      <li class="create-emloyee-form_list-field">
+        <span class="input-label">Primary skills</span>
+        <input name="empl-primary-skills" type="text" placeholder="Separate skills by comas*" required data-ng-model="newEmployee.skills">
+      </li>
+
+      <li class="create-emloyee-form_list-field">
+        <span class="input-label">Add employee photo URL</span>
+        <input name="photoUrl" type="url" placeholder="You can use photo Url from Linkedin" data-ng-model="newEmployee.photoUrl">
+      </li>
+                
+      <li  class="create-emloyee-form_list-field">
+        <p class="input-label">Employee links</p>
+        <ul class="create-emloyee-form_list-links">  
+          <li class="create-emloyee-form_list-links_link">
+            <input type="url" name="empl-linkedin-page" placeholder="Linkedin page url" class="link-linkedin" data-ng-model="newEmployee.ldUrl">
+          </li>
+          <li class="create-emloyee-form_list-links_link">
+            <input type="url" name="empl-behance-page" placeholder="Behance page url" class="link-behance" data-ng-model="newEmployee.bhUrl">
+          </li>
+          <li class="create-emloyee-form_list-links_link">
+            <input type="url" name="empl-web-page" placeholder="Other sites" class="link-link" data-ng-model="newEmployee.otherUrl">
+          </li>
+        </ul>
+      </li>
+                
+      <li  class="create-emloyee-form_list-field">
+        <p class="input-label contact-info">Contact information</p>
+        <input name="empl-skype" type="text" placeholder="Skype*" required data-ng-model="newEmployee.skype">
+        <input name="empl-email" type="email" placeholder="E-mail" data-ng-model="newEmployee.email">
+      </li>         
+             
+    </ul>
+                   
+    <div class="block_buton-create-employee"><button type="submit" id="buton-create-employee" class="buton-create-employee">Submit</button></div>
+  </form>
+</section>
+    
+<button class="button-employee add-employee" data-ng-click="showme=true">Add employee</button>
+  
+  <h2 class="block-employees_title">Emloyees: {{employees.length}}</h2>
+  <nav class="block-employees_nav-departments">
+    <div class="block-employees-search"><input data-ng-model="query" placeholder="Search. Just start typing..." class="search-feald"></div>
+    <ul class="block-employees_nav-departments_list">
+      <li class="block-employees_nav-departments_list_department mobile" data-ng-click="myFilter = {'department' : 'mobile'}">Mobile</li>
+      <li class="block-employees_nav-departments_list_department web" data-ng-click="myFilter = {'department' : 'web'}">Web</li>
+      <li class="block-employees_nav-departments_list_department testing" data-ng-click="myFilter = {'department' : 'testing'}">Testing</li>
+      <li class="block-employees_nav-departments_list_department sales" data-ng-click="myFilter = {'department': 'sales'}">Sales</li>
+      <li class="block-employees_nav-departments_list_department" data-ng-click="myFilter = {}">Show all</li>
+    </ul>
+  </nav>
+<!--Employees list header ends --> 
+
+<!--Employees list begins-->
+  <ul class="block-employees_list" data-ng-show="employees" data-ng-style="resizeWithOffset(305)" data-resize>
+    <li  class="block-employees_block-employee {{employee.department}}" data-ng-repeat="employee in employees | filter:query | filter:myFilter track by employee._id"  data-ng-class="{active: ('employees' | routeSegmentStartsWith) && ('employeeId' | routeSegmentParam) == employee._id}">
+      <a class="block-employees_block-employee_link" href="#/employees/{{employee._id}}">
+        <div class="photo-block">
+          <img data-ng-src="{{employee.photoUrl || '/img/user.png'}}" width="59" alt="{{employee.name}} {{employee.surname}} photo">
+        </div>
+        <h3 class="block-employees_block-employee_name">{{employee.name}} {{employee.surname}}</h3>
+        <p class="block-employees_block-employee_title">{{employee.level}} {{employee.title}}</p>
+        <ul class="block-employees_block-employee_block-tags"> 
+          <li class="block-employees_block-employee_block-tags_tag" data-ng-repeat="skill in employee.skills track by $index">{{skill}}</li>
+        </ul>
+      </a>
+    </li>
+  </ul>
+       
+</section>   
+      
+<!--Block employees list ends-->
