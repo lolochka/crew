@@ -1,4 +1,4 @@
 {
-  "cwd": "..",
-  "directory": "app/bower_components"
+  "directory": "public/bower_components",
+  "interactive": false
 }
