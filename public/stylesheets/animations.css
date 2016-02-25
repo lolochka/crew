@@ -18,3 +18,8 @@
 .block-employees_block-employee.ng-leave, .block-content.ng-leave, .employee-details.ng-leave {
   display: none;
 }
+
+#buton-create-employee.no-animate {
+   -webkit-transition: none !important;
+   transition: none !important;
+}

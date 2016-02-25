@@ -24,6 +24,10 @@ crewServices.factory('Employees', ['$http', function($http){
         return $http.delete(urlBase + '/' + id);
     }
     
+    _employees.update = function(id,empl) {
+        return $http.put(urlBase + '/' + id,empl);
+    }
+    
     return _employees;
 
 }]);
@@ -47,11 +51,10 @@ crewServices.factory('Cache', ['$resource', function($resource) {
     return cache_service;
 }]);
 
-crewServices.factory('Employee', ['$location', 'Cache', '$window', function($location, Cache, $window) {
+crewServices.factory('Employee', ['$location', 'Cache', '$window', 'Employees', function($location, Cache, $window, Employees) {
     var employee_service = {};
       
     employee_service.delete = function (key, arr) {
-    Cache.removeItem(key);
     if (arr !== undefined) {
       for (var i = 0; i < arr.length; i++ ) {
         if ( arr[i]._id == key) {
@@ -84,17 +87,6 @@ crewServices.factory('Employee', ['$location', 'Cache', '$window', function($loc
     Cache.cacheItem(obj._id, obj);
   };
 
-  employee_service.edit = function (obj, arr) {
-    for (var i = 0; i < arr.length; i++) {
-      if ( arr[i]._id == obj._id) {
-        arr[i] = obj;
-      }
-    }
-    Cache.cacheItem(obj._id, obj);
-    $location.path("/employees/"+obj._id).replace();
-    $window.location.reload();
-  };
-
   employee_service.addTxt = function (obj, txt) {
     if (txt.text) {
       var date = new Date();
@@ -103,7 +95,7 @@ crewServices.factory('Employee', ['$location', 'Cache', '$window', function($loc
       txt._id = date.getTime();
       var newComment = txt;
       obj.comments.push(newComment);
-      Cache.cacheItem(obj._id, obj);
+      Employees.update(obj._id, obj);
       return txt;
     }
   }
@@ -114,7 +106,7 @@ crewServices.factory('Employee', ['$location', 'Cache', '$window', function($loc
         obj.comments.splice(i, 1);
       };
     }
-    Cache.cacheItem(obj._id, obj);
+    Employees.update(obj._id, obj);
   }
   
   return employee_service;

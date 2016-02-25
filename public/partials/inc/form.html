@@ -1,0 +1,63 @@
+<div class="overlay" data-ng-show="showForm" data-ng-click="form()"></div>
+<section class="block-create-employee" data-ng-show="showForm">
+  <div class="heading-create-employee_close" data-ng-click="form()"></div>
+  <h2 class="heading-create-employee">Employee</h2>
+        
+  <form id="create-emloyee-form" name="create-employee" class="create-emloyee-form">
+    <ul class="create-emloyee-form_list">
+                
+      <li class="create-emloyee-form_list-field">
+        <input type="text" name='empl-name' data-ng-model="newEmployee.name" placeholder="Name*" required pattern="^[A-Za-z]{2,}">
+        <input type="text" name='empl-surname' data-ng-model="newEmployee.surname" placeholder="Surname*" pattern="^[A-Za-z]{2,}" required>
+      </li>
+                
+      <li class="create-emloyee-form_list-field">
+        <input type="text" name='empl-title' placeholder="Job position*" required data-ng-model="newEmployee.title">
+        <select name='empl-level' id="level" data-ng-model="newEmployee.level" data-ng-options="level.value as level.name for level in levels" data-default-option="Choose level"></select>
+      </li>
+      <li class="create-emloyee-form_list-field">
+        <select name="empl-department" id="department" data-ng-model="newEmployee.department" required data-ng-options="department.value as department.name for department in departments" data-default-option="Choose department*"></select>
+        <input type="text" name="empl-manager" placeholder="Responsible manager" data-ng-model="newEmployee.manager">
+      </li>
+      <li class="create-emloyee-form_list-field">
+        <span class="input-label">Career start</span> 
+        <select name="empl-month-career-start" data-ng-model="newEmployee.month" data-ng-options="month.value as month.name for month in months" data-default-option="Choose month"></select>
+        <input type="text"  name="empl-year-career-start" placeholder="year" pattern="^(19|20)\d\d" data-ng-model="newEmployee.year">
+      </li>
+                
+      <li class="create-emloyee-form_list-field">
+        <span class="input-label">Primary skills</span>
+        <input name="empl-primary-skills" type="text" placeholder="Separate skills by comas*" required data-ng-model="newEmployee.skills">
+      </li>
+
+      <li class="create-emloyee-form_list-field">
+        <span class="input-label">Add employee photo URL</span>
+        <input name="photoUrl" type="url" placeholder="You can use photo Url from Linkedin" data-ng-model="newEmployee.photoUrl">
+      </li>
+                
+      <li  class="create-emloyee-form_list-field">
+        <p class="input-label">Employee links</p>
+        <ul class="create-emloyee-form_list-links">  
+          <li class="create-emloyee-form_list-links_link">
+            <input type="url" name="empl-linkedin-page" placeholder="Linkedin page url" class="link-linkedin" data-ng-model="newEmployee.ldUrl">
+          </li>
+          <li class="create-emloyee-form_list-links_link">
+            <input type="url" name="empl-behance-page" placeholder="Behance page url" class="link-behance" data-ng-model="newEmployee.bhUrl">
+          </li>
+          <li class="create-emloyee-form_list-links_link">
+            <input type="url" name="empl-web-page" placeholder="Other sites" class="link-link" data-ng-model="newEmployee.otherUrl">
+          </li>
+        </ul>
+      </li>
+                
+      <li  class="create-emloyee-form_list-field">
+        <p class="input-label contact-info">Contact information</p>
+        <input name="empl-skype" type="text" placeholder="Skype*" required data-ng-model="newEmployee.skype">
+        <input name="empl-email" type="email" placeholder="E-mail" data-ng-model="newEmployee.email">
+      </li>         
+             
+    </ul>
+                   
+    <div class="block_buton-create-employee"><button type="submit" id="buton-create-employee" class="buton-create-employee" data-ng-click="addEmployee()" ng-if="!edit">Submit</button><button type="submit" id="buton-create-employee" class="buton-create-employee no-animate" data-ng-click="saveEmployee()" ng-if="edit">Save</button></div>
+  </form>
+</section> 

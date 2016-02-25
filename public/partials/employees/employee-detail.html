@@ -1,4 +1,4 @@
-<section class="block-emploee-description" ng-class="showDetails" data-ng-cloak>
+<section class="block-emploee-description" ng-class="showDetails" data-ng-cloak ng-animate="false">
 <div class="employee-details">
 <header class="block-emploee-description_header">
 	<div class="block-emploee-description_header_close" data-ng-click="hideDetails()"></div>
@@ -78,3 +78,6 @@
 </div>
 </div>
 </section>
+{{edit}}
+{{showForm}}
+<div ng-include src="'partials/inc/form.html'" ng-if="edit"></div> 

@@ -4,8 +4,25 @@
 
 var crewControllers = angular.module('crewControllers', []);
 
-crewControllers.controller('EmployeeListCtrl', ['$scope', 'Cache', '$location', '$window', 'Employee', '$http', 'Employees', function ($scope, Cache, $location, $window, Employee, $http, Employees) {
-  $scope.employees;
+crewControllers.controller('EmployeeListCtrl', [
+    '$scope',
+    'Cache',
+    '$location',
+    '$window',
+    'Employee',
+    '$http',
+    'Employees',
+    '$rootScope',
+    function (
+        $scope,
+        Cache,
+        $location, 
+        $window, 
+        Employee, 
+        $http, 
+        Employees, 
+        $rootScope) {
+    
   Employees.get().success(function(data) {
       $scope.employees = data;
   });
@@ -29,7 +46,7 @@ crewControllers.controller('EmployeeListCtrl', ['$scope', 'Cache', '$location', 
     });
     $scope.employees = Employee.delete(param, $scope.employees);
   };
-  
+   
   $scope.addEmployee = function() {
     $scope.newEmployee.skills = $scope.newEmployee.skills.split(", ");
     Employees.create($scope.newEmployee).success(function(data){
@@ -39,19 +56,46 @@ crewControllers.controller('EmployeeListCtrl', ['$scope', 'Cache', '$location', 
         console.log(data);
     });
     $scope.newEmployee = {};
-    $scope.showme = false;
+    $rootScope.showForm = false;
     return false;
   };
-
-  $scope.editEmployee = function (obj) {
-    $scope.showme = true;
-    angular.copy(obj, $scope.newEmployee);
-    $scope.newEmployee.skills = $scope.newEmployee.skills.join(', ');
-  };
+  
+  $rootScope.form = function() {
+      $rootScope.showForm = !$rootScope.showForm;
+      $rootScope.edit = false;
+      $scope.newEmployee = {};
+  }
+  
+  $scope.saveEmployee = function() {
+      $scope.newEmployee.skills = $scope.newEmployee.skills.split(", ");
+      Employees.update($scope.newEmployee._id,$scope.newEmployee).success(function(data){
+          $rootScope.showForm = false;
+          $rootScope.edit = false;
+          $location.path("/employees/"+$scope.newEmployee._id).replace();
+          $window.location.reload();
+      })
+  }
 
 }])
 
-  .controller('EmployeeDataCtrl', ['$scope', '$routeParams', 'Cache', '$routeSegment', '$location', 'Employee', 'Employees',  function($scope, $routeParams, Cache, $routeSegment, $location, Employee, Employees) {
+.controller('EmployeeDataCtrl', [
+      '$scope', 
+      '$routeParams', 
+      'Cache', 
+      '$routeSegment', 
+      '$location', 
+      'Employee', 
+      'Employees', 
+      '$rootScope',  
+      function(
+          $scope, 
+          $routeParams, 
+          Cache, 
+          $routeSegment, 
+          $location, 
+          Employee, 
+          Employees, 
+          $rootScope) {
 
     $scope.routeParams = $routeParams.employeeId;
 
@@ -62,6 +106,12 @@ crewControllers.controller('EmployeeListCtrl', ['$scope', 'Cache', '$location', 
     });
     
     // $scope.experience = Employee.getExperience;
+    $scope.editEmployee = function (obj) {
+        $rootScope.edit = true;
+        $rootScope.showForm = true;
+        angular.copy(obj, $scope.newEmployee);
+        $scope.newEmployee.skills = $scope.newEmployee.skills.join(', ');
+    };
 
     $scope.newComment = {};
     $scope.addComment = function (obj, txt) {
@@ -76,6 +126,8 @@ crewControllers.controller('EmployeeListCtrl', ['$scope', 'Cache', '$location', 
     $scope.hideDetails = function() {
       $location.path("/employees/").replace();
     }
+    
+    console.log(this);
   }]);
 
 

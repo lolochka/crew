@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 //REST api creation
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/crew');
 var EmployeeSchema = new mongoose.Schema({
     name: String,
     surname: String,
