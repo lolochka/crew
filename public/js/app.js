@@ -12,6 +12,7 @@ crewApp.config(['$routeSegmentProvider', '$routeProvider',
       .when('/about',                   'about')
       .when('/faq',                     'faq')
       .when('/contact',                 'contact')
+      .when('/error',                   'error')
 
       .segment('employees', {
         templateUrl: 'partials/employees.html',
@@ -32,7 +33,7 @@ crewApp.config(['$routeSegmentProvider', '$routeProvider',
         })
 
         .up()
-
+      
       .segment('about', {
         templateUrl: 'partials/about.html'
       })
@@ -44,6 +45,10 @@ crewApp.config(['$routeSegmentProvider', '$routeProvider',
 
       .segment('contact', {
         templateUrl: 'partials/contact.html'
+      })
+    
+      .segment('error', {
+        templateUrl: 'partials/error.html'
       });
 
     $routeProvider.otherwise({redirectTo: '/employees'});

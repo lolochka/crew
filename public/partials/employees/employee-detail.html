@@ -32,7 +32,7 @@
 	<div class="block-emploee-description_description">
 		<p class="block-emploee-description_list-description_department">Department: <span class="block-emploee-description_list-description_department-label">{{thisEmployee.department}}</span></p>
 		<p data-ng-show="thisEmployee.manager" class="block-emploee-description_block-main-description_manager">Manager: <span class="block-emploee-description_block-main-description_manager-label">{{thisEmployee.manager}}</span></p>
-		<p data-ng-show="experience(thisEmployee)" class="block-emploee-description_block-main-description_years">Years of experience: <span class="block-emploee-description_block-main-description_years-label">{{experience(thisEmployee)}}</span></p>
+		<p data-ng-show="thisEmployee.experience" class="block-emploee-description_block-main-description_years">Years of experience: <span class="block-emploee-description_block-main-description_years-label">{{thisEmployee.experience | experience}}</span></p>
 		<p class="block-emploee-description_block-main-description_skills-label">Primary skills:</p>
 		<ul class="block-emploee-description_block-main-description_tags-list">
 			<li class="block-emploee-description_block-main-description_tags-list_tag" data-ng-repeat="skill in thisEmployee.skills track by $index">{{skill}}</li>
@@ -78,6 +78,4 @@
 </div>
 </div>
 </section>
-{{edit}}
-{{showForm}}
 <div ng-include src="'partials/inc/form.html'" ng-if="edit"></div> 

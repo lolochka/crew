@@ -11,8 +11,10 @@ var EmployeeSchema = new mongoose.Schema({
     level: String,
     department: String,
     manager: String,
-    month: Number,
-    year: Number,
+    experience: {
+      month: Number,
+      year: Number
+    },
     skills: [String],
     photo: String,
     skype: String,
@@ -65,6 +67,8 @@ router.get('/:id', function(req, res, next){
 });
 
 router.put('/:id', function(req,res,next){
+    delete req.body.$resolved;
+    delete req.body.$promise;
     Employee.findByIdAndUpdate(req.params.id, req.body, function(err,post){
         if (err) return next(err);
         res.json(post);

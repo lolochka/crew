@@ -6,26 +6,22 @@ var crewControllers = angular.module('crewControllers', []);
 
 crewControllers.controller('EmployeeListCtrl', [
     '$scope',
-    'Cache',
     '$location',
     '$window',
-    'Employee',
+    'manageEmployee',
     '$http',
     'Employees',
     '$rootScope',
     function (
         $scope,
-        Cache,
         $location, 
         $window, 
-        Employee, 
+        manageEmployee, 
         $http, 
         Employees, 
         $rootScope) {
     
-  Employees.get().success(function(data) {
-      $scope.employees = data;
-  });
+  $scope.employees = Employees.query();
   $scope.thisEmployee = {};
   $scope.newEmployee = {};
 
@@ -41,23 +37,22 @@ crewControllers.controller('EmployeeListCtrl', [
 
   $scope.deleteEmployee = function (param) {
     console.log(param);
-    Employees.delete(param).success(function(data){
-        console.log(data);
+    Employees.remove({id: param}, function() {
+      $scope.employees = manageEmployee.delete(param, $scope.employees);
     });
-    $scope.employees = Employee.delete(param, $scope.employees);
   };
    
   $scope.addEmployee = function() {
     $scope.newEmployee.skills = $scope.newEmployee.skills.split(", ");
-    Employees.create($scope.newEmployee).success(function(data){
-        $scope.employees.push(data);
-        $location.path("/employees/"+data._id).replace();
-    }).error(function(data){
-        console.log(data);
-    });
-    $scope.newEmployee = {};
-    $rootScope.showForm = false;
-    return false;
+    
+    var employee = new Employees($scope.newEmployee);
+    console.log(employee);
+    employee.$save(function(){
+      $scope.employees.push(employee);
+      $rootScope.showForm = false;
+      $scope.newEmployee = {};
+      $location.path("/employees/"+employee._id).replace();
+    })
   };
   
   $rootScope.form = function() {
@@ -68,41 +63,39 @@ crewControllers.controller('EmployeeListCtrl', [
   
   $scope.saveEmployee = function() {
       $scope.newEmployee.skills = $scope.newEmployee.skills.split(", ");
-      Employees.update($scope.newEmployee._id,$scope.newEmployee).success(function(data){
-          $rootScope.showForm = false;
-          $rootScope.edit = false;
-          $location.path("/employees/"+$scope.newEmployee._id).replace();
-          $window.location.reload();
-      })
-  }
+      var employee = $scope.newEmployee;
+      Employees.update({id: employee._id},employee);
+      $rootScope.showForm = false;
+      $rootScope.edit = false;
+      $location.path("/employees/"+$scope.newEmployee._id).replace();
+      $window.location.reload();
+   }
 
 }])
 
 .controller('EmployeeDataCtrl', [
       '$scope', 
-      '$routeParams', 
-      'Cache', 
+      '$routeParams',
       '$routeSegment', 
       '$location', 
-      'Employee', 
+      'manageEmployee', 
       'Employees', 
       '$rootScope',  
       function(
           $scope, 
-          $routeParams, 
-          Cache, 
+          $routeParams,
           $routeSegment, 
           $location, 
-          Employee, 
+          manageEmployee, 
           Employees, 
           $rootScope) {
 
     $scope.routeParams = $routeParams.employeeId;
-
-    Employees.read($routeParams.employeeId).success(function(data){
-        $scope.thisEmployee = data;
-    }).error(function(data){
-        $location.path("/employees").replace();
+    
+    $scope.thisEmployee = Employees.get({id:$routeParams.employeeId},function(res){   },function(res){
+      if (res.status === 404) {
+        $location.path("/error").replace();
+      }
     });
     
     // $scope.experience = Employee.getExperience;
@@ -115,11 +108,11 @@ crewControllers.controller('EmployeeListCtrl', [
 
     $scope.newComment = {};
     $scope.addComment = function (obj, txt) {
-      Employee.addTxt(obj, txt);
+      manageEmployee.addTxt(obj, txt);
       $scope.newComment = {};
     };
 
-    $scope.removeComment = Employee.removeTxt;
+    $scope.removeComment = manageEmployee.removeTxt;
 
     $scope.showDetails = "show";
 
@@ -127,7 +120,6 @@ crewControllers.controller('EmployeeListCtrl', [
       $location.path("/employees/").replace();
     }
     
-    console.log(this);
   }]);
 
 
