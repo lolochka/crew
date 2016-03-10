@@ -3,6 +3,7 @@
 /* App Module */
 var crewApp = angular.module('crewApp', ['ngRoute', 'crewControllers', 'crewServices', 'route-segment', 'view-segment', 'ngAnimate']);
 
+/* Nested Routing */
 crewApp.config(['$routeSegmentProvider', '$routeProvider',
   function ($routeSegmentProvider, $routeProvider) {
     
